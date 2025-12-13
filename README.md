@@ -43,3 +43,9 @@ GEN=ninja make
 # Install and load
 ./build/release/duckdb
 ```
+
+Check it built correctly with
+
+```bash
+echo "SELECT * FROM fit_records('sample.fit') LIMIT 5;" | ./build/release/duckdb
+```
