@@ -31,12 +31,12 @@
 #include <algorithm>
 
 #ifdef _WIN32
-	#include <windows.h>
-	#include <shlwapi.h>
+#include <windows.h>
+#include <shlwapi.h>
 #else
-	#include <fnmatch.h>
-	#include <dirent.h>
-	#include <sys/stat.h>
+#include <fnmatch.h>
+#include <dirent.h>
+#include <sys/stat.h>
 #endif
 
 namespace duckdb {
@@ -68,7 +68,8 @@ static vector<string> ExpandGlobPattern(const string &pattern) {
 
 	// Convert to Windows path separators
 	for (auto &c : dir_path) {
-		if (c == '/') c = '\\';
+		if (c == '/')
+			c = '\\';
 	}
 
 	string search_path = dir_path + "\\" + filename_pattern;
@@ -82,7 +83,8 @@ static vector<string> ExpandGlobPattern(const string &pattern) {
 				string full_path = dir_path + "\\" + find_data.cFileName;
 				// Convert back to forward slashes for consistency
 				for (auto &c : full_path) {
-					if (c == '\\') c = '/';
+					if (c == '\\')
+						c = '/';
 				}
 				files.push_back(full_path);
 			}
