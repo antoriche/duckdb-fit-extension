@@ -31,7 +31,6 @@
 
 #ifdef _WIN32
 #include <windows.h>
-#include <shlwapi.h>
 #else
 #include <fnmatch.h>
 #include <dirent.h>
