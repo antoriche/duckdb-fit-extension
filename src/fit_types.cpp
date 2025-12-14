@@ -31,12 +31,12 @@ FitActivity::FitActivity()
 }
 
 FitSession::FitSession()
-    : session_id(0), activity_id(0), timestamp(timestamp_tz_t(0)), start_time(timestamp_tz_t(0)), total_elapsed_time(0.0),
-      total_timer_time(0.0), total_distance(0.0), sport(""), sub_sport(""), total_calories(0), avg_speed(0.0),
-      max_speed(0.0), avg_heart_rate(0), max_heart_rate(0), min_heart_rate(0), avg_cadence(0), max_cadence(0),
-      avg_power(0), max_power(0), normalized_power(0), intensity_factor(0.0), training_stress_score(0.0), total_work(0),
-      total_ascent(0.0), total_descent(0.0), first_lap_index(0), num_laps(0), event(""), event_type(""), trigger(""),
-      file_source("") {
+    : session_id(0), activity_id(0), timestamp(timestamp_tz_t(0)), start_time(timestamp_tz_t(0)),
+      total_elapsed_time(0.0), total_timer_time(0.0), total_distance(0.0), sport(""), sub_sport(""), total_calories(0),
+      avg_speed(0.0), max_speed(0.0), avg_heart_rate(0), max_heart_rate(0), min_heart_rate(0), avg_cadence(0),
+      max_cadence(0), avg_power(0), max_power(0), normalized_power(0), intensity_factor(0.0),
+      training_stress_score(0.0), total_work(0), total_ascent(0.0), total_descent(0.0), first_lap_index(0), num_laps(0),
+      event(""), event_type(""), trigger(""), file_source("") {
 }
 
 FitLap::FitLap()
@@ -56,8 +56,8 @@ FitDevice::FitDevice()
 }
 
 FitEvent::FitEvent()
-    : event_id(0), activity_id(0), timestamp(timestamp_tz_t(0)), event(""), event_type(""), data(0), data16(0), score(0),
-      opponent_score(0), front_gear_num(0), front_gear(0), rear_gear_num(0), rear_gear(0), device_index(0),
+    : event_id(0), activity_id(0), timestamp(timestamp_tz_t(0)), event(""), event_type(""), data(0), data16(0),
+      score(0), opponent_score(0), front_gear_num(0), front_gear(0), rear_gear_num(0), rear_gear(0), device_index(0),
       activity_type(""), start_timestamp(timestamp_tz_t(0)), file_source("") {
 }
 
