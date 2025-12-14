@@ -6,7 +6,8 @@
                 "${workspaceFolder}/src/include",
                 "${workspaceFolder}/src/fit-sdk",
                 "${workspaceFolder}/duckdb/src/include",
-                "${workspaceFolder}/build/release/src/include",
+                "${workspaceFolder}/duckdb/third_party/catch",
+                "${workspaceFolder}/duckdb/test/include",
                 "/usr/local/include"
             ],
             "defines": [

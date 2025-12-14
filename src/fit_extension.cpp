@@ -1970,6 +1970,12 @@ static unique_ptr<FunctionData> FitActivitiesBind(ClientContext &context, TableF
 static void FitActivitiesFunction(ClientContext &context, TableFunctionInput &data_p, DataChunk &output) {
 	auto &data = (FitTableFunctionData &)*data_p.bind_data;
 
+	// Defensive check for empty activities vector
+	if (data.fit_activities.empty() || data.current_row >= data.fit_activities.size()) {
+		output.SetCardinality(0);
+		return;
+	}
+
 	idx_t remaining_rows = data.fit_activities.size() - data.current_row;
 	idx_t rows_to_output = MinValue<idx_t>(remaining_rows, STANDARD_VECTOR_SIZE);
 
