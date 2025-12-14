@@ -3,7 +3,7 @@
 namespace duckdb {
 
 FitRecord::FitRecord()
-    : timestamp(timestamp_tz_t()), latitude(0.0), longitude(0.0), altitude(0.0), enhanced_altitude(0.0), distance(0.0),
+    : timestamp(timestamp_tz_t(0)), latitude(0.0), longitude(0.0), altitude(0.0), enhanced_altitude(0.0), distance(0.0),
       speed(0.0), enhanced_speed(0.0), vertical_speed(0.0), power(0), motor_power(0), accumulated_power(0),
       compressed_accumulated_power(0), heart_rate(0), total_hemoglobin_conc(0.0), total_hemoglobin_conc_min(0.0),
       total_hemoglobin_conc_max(0.0), saturated_hemoglobin_percent(0.0), saturated_hemoglobin_percent_min(0.0),
@@ -22,8 +22,8 @@ FitRecord::FitRecord()
 }
 
 FitActivity::FitActivity()
-    : activity_id(0), file_id(""), timestamp(timestamp_tz_t()), local_timestamp(timestamp_tz_t()),
-      start_time(timestamp_tz_t()), total_timer_time(0.0), total_elapsed_time(0.0), total_distance(0.0), sport(""),
+    : activity_id(0), file_id(""), timestamp(timestamp_tz_t(0)), local_timestamp(timestamp_tz_t(0)),
+      start_time(timestamp_tz_t(0)), total_timer_time(0.0), total_elapsed_time(0.0), total_distance(0.0), sport(""),
       sub_sport(""), manufacturer(""), product(""), device_serial_number(0), software_version(""), total_calories(0),
       total_ascent(0.0), total_descent(0.0), avg_heart_rate(0), max_heart_rate(0), avg_speed(0.0), max_speed(0.0),
       avg_power(0), max_power(0), avg_cadence(0), max_cadence(0), start_position_lat(0.0), start_position_long(0.0),
@@ -31,7 +31,7 @@ FitActivity::FitActivity()
 }
 
 FitSession::FitSession()
-    : session_id(0), activity_id(0), timestamp(timestamp_tz_t()), start_time(timestamp_tz_t()), total_elapsed_time(0.0),
+    : session_id(0), activity_id(0), timestamp(timestamp_tz_t(0)), start_time(timestamp_tz_t(0)), total_elapsed_time(0.0),
       total_timer_time(0.0), total_distance(0.0), sport(""), sub_sport(""), total_calories(0), avg_speed(0.0),
       max_speed(0.0), avg_heart_rate(0), max_heart_rate(0), min_heart_rate(0), avg_cadence(0), max_cadence(0),
       avg_power(0), max_power(0), normalized_power(0), intensity_factor(0.0), training_stress_score(0.0), total_work(0),
@@ -40,7 +40,7 @@ FitSession::FitSession()
 }
 
 FitLap::FitLap()
-    : lap_id(0), session_id(0), activity_id(0), timestamp(timestamp_tz_t()), start_time(timestamp_tz_t()),
+    : lap_id(0), session_id(0), activity_id(0), timestamp(timestamp_tz_t(0)), start_time(timestamp_tz_t(0)),
       total_elapsed_time(0.0), total_timer_time(0.0), total_distance(0.0), total_calories(0), avg_speed(0.0),
       max_speed(0.0), avg_heart_rate(0), max_heart_rate(0), min_heart_rate(0), avg_cadence(0), max_cadence(0),
       avg_power(0), max_power(0), total_ascent(0.0), total_descent(0.0), lap_trigger(""), event(""), event_type(""),
@@ -56,9 +56,9 @@ FitDevice::FitDevice()
 }
 
 FitEvent::FitEvent()
-    : event_id(0), activity_id(0), timestamp(timestamp_tz_t()), event(""), event_type(""), data(0), data16(0), score(0),
+    : event_id(0), activity_id(0), timestamp(timestamp_tz_t(0)), event(""), event_type(""), data(0), data16(0), score(0),
       opponent_score(0), front_gear_num(0), front_gear(0), rear_gear_num(0), rear_gear(0), device_index(0),
-      activity_type(""), start_timestamp(timestamp_tz_t()), file_source("") {
+      activity_type(""), start_timestamp(timestamp_tz_t(0)), file_source("") {
 }
 
 FitUser::FitUser()
