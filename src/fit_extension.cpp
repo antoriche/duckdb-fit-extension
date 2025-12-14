@@ -70,7 +70,14 @@ static vector<string> ExpandGlobPattern(const string &pattern) {
 			c = '\\';
 	}
 
-	string search_path = dir_path + "\\" + filename_pattern;
+	// Construct search path - don't add separator for current directory
+	string search_path;
+	if (dir_path == ".") {
+		search_path = filename_pattern;
+	} else {
+		search_path = dir_path + "\\" + filename_pattern;
+	}
+
 	WIN32_FIND_DATAA find_data;
 	HANDLE hFind = FindFirstFileA(search_path.c_str(), &find_data);
 
@@ -78,7 +85,12 @@ static vector<string> ExpandGlobPattern(const string &pattern) {
 		do {
 			// Skip directories
 			if (!(find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-				string full_path = dir_path + "\\" + find_data.cFileName;
+				string full_path;
+				if (dir_path == ".") {
+					full_path = find_data.cFileName;
+				} else {
+					full_path = dir_path + "\\" + find_data.cFileName;
+				}
 				// Convert back to forward slashes for consistency
 				for (auto &c : full_path) {
 					if (c == '\\')
