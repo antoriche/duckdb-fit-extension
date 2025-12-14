@@ -4,6 +4,13 @@ This repository is based on the [DuckDB extension template](https://github.com/d
 
 This extension allows you to read Garmin `.fit` files using DuckDB, providing access to GPS tracks, heart rate data, power metrics, and other sensor information from fitness devices.
 
+## Installation
+
+```sql
+INSTALL fit FROM community;
+LOAD fit;
+```
+
 ## Table Functions
 
 | Function                   | Description                                        |
