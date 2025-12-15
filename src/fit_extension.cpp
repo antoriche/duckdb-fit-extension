@@ -172,13 +172,13 @@ struct FitRecord {
 	double vertical_speed; // Meters per second
 
 	// Power metrics (watts)
-	uint16_t power;
-	uint16_t motor_power; // E-bike motor power
-	uint32_t accumulated_power;
-	uint16_t compressed_accumulated_power;
+	float power;
+	float motor_power; // E-bike motor power
+	float accumulated_power;
+	float compressed_accumulated_power;
 
 	// Heart rate and physiological data
-	uint8_t heart_rate; // Beats per minute (corrected from uint16_t)
+	float heart_rate; // Beats per minute (corrected from uint16_t)
 	double total_hemoglobin_conc;
 	double total_hemoglobin_conc_min;
 	double total_hemoglobin_conc_max;
@@ -187,25 +187,25 @@ struct FitRecord {
 	double saturated_hemoglobin_percent_max;
 
 	// Cadence metrics
-	uint8_t cadence; // RPM/steps per minute (corrected from uint16_t)
+	float cadence; // RPM/steps per minute (corrected from uint16_t)
 	double cadence256;
 	double fractional_cadence;
 
 	// Temperature (Celsius)
-	int8_t temperature; // Corrected to int8_t for proper range
-	double core_temperature;
+	float temperature; // Corrected to int8_t for proper range
+	float core_temperature;
 
 	// Cycling metrics
 	double grade; // Percentage
-	uint16_t resistance;
-	uint8_t left_right_balance;        // Percentage (corrected from double)
+	float resistance;
+	float left_right_balance;          // Percentage (corrected from double)
 	double left_torque_effectiveness;  // Percentage
 	double right_torque_effectiveness; // Percentage
 	double left_pedal_smoothness;      // Percentage
 	double right_pedal_smoothness;     // Percentage
 	double combined_pedal_smoothness;  // Percentage
-	int8_t left_pco;                   // Platform center offset (mm)
-	int8_t right_pco;                  // Platform center offset (mm)
+	float left_pco;                    // Platform center offset (mm)
+	float right_pco;                   // Platform center offset (mm)
 
 	// Running metrics
 	double vertical_oscillation; // Millimeters
@@ -223,10 +223,10 @@ struct FitRecord {
 
 	// Navigation and course
 	double time_from_course; // Seconds
-	uint8_t gps_accuracy;    // Meters
+	double gps_accuracy;     // Meters
 
 	// Energy and calories
-	uint16_t calories; // Kilocalories
+	double calories; // Kilocalories
 
 	// Zones and training
 	uint8_t zone;
@@ -312,17 +312,17 @@ struct FitActivity {
 	string product;
 	uint64_t device_serial_number;
 	string software_version;
-	uint32_t total_calories;
+	double total_calories;
 	double total_ascent;
 	double total_descent;
-	uint8_t avg_heart_rate;
-	uint8_t max_heart_rate;
+	float avg_heart_rate;
+	float max_heart_rate;
 	double avg_speed;
 	double max_speed;
-	uint16_t avg_power;
-	uint16_t max_power;
-	uint8_t avg_cadence;
-	uint8_t max_cadence;
+	double avg_power;
+	double max_power;
+	float avg_cadence;
+	float max_cadence;
 	double start_position_lat;
 	double start_position_long;
 	double end_position_lat;
@@ -351,20 +351,20 @@ struct FitSession {
 	double total_distance;
 	string sport;
 	string sub_sport;
-	uint32_t total_calories;
+	double total_calories;
 	double avg_speed;
 	double max_speed;
-	uint8_t avg_heart_rate;
-	uint8_t max_heart_rate;
-	uint8_t min_heart_rate;
-	uint8_t avg_cadence;
-	uint8_t max_cadence;
-	uint16_t avg_power;
-	uint16_t max_power;
-	uint16_t normalized_power;
+	float avg_heart_rate;
+	float max_heart_rate;
+	float min_heart_rate;
+	double avg_cadence;
+	double max_cadence;
+	float avg_power;
+	float max_power;
+	float normalized_power;
 	double intensity_factor;
 	double training_stress_score;
-	uint32_t total_work;
+	double total_work;
 	double total_ascent;
 	double total_descent;
 	uint8_t first_lap_index;
@@ -397,13 +397,13 @@ struct FitLap {
 	uint32_t total_calories;
 	double avg_speed;
 	double max_speed;
-	uint8_t avg_heart_rate;
-	uint8_t max_heart_rate;
-	uint8_t min_heart_rate;
-	uint8_t avg_cadence;
-	uint8_t max_cadence;
-	uint16_t avg_power;
-	uint16_t max_power;
+	float avg_heart_rate;
+	float max_heart_rate;
+	float min_heart_rate;
+	double avg_cadence;
+	double max_cadence;
+	double avg_power;
+	double max_power;
 	double total_ascent;
 	double total_descent;
 	string lap_trigger;
@@ -493,12 +493,12 @@ struct FitUser {
 	string language;
 	int8_t time_zone;
 	double activity_class;
-	uint8_t running_lactate_threshold_hr;
-	uint8_t cycling_lactate_threshold_hr;
-	uint8_t swimming_lactate_threshold_hr;
-	uint8_t default_max_running_hr;
-	uint8_t default_max_biking_hr;
-	uint8_t default_max_hr;
+	float running_lactate_threshold_hr;
+	float cycling_lactate_threshold_hr;
+	float swimming_lactate_threshold_hr;
+	float default_max_running_hr;
+	float default_max_biking_hr;
+	float default_max_hr;
 	string hr_setting;
 	string speed_setting;
 	string dist_setting;
@@ -511,8 +511,8 @@ struct FitUser {
 	uint32_t sleep_time;
 	string height_setting;
 	string weight_setting;
-	uint8_t resting_heart_rate;
-	uint8_t default_max_swimming_hr;
+	float resting_heart_rate;
+	float default_max_swimming_hr;
 	string file_source;
 
 	FitUser()
@@ -572,259 +572,259 @@ public:
 
 		// Position - Convert semicircles to degrees properly
 		if (record.IsPositionLatValid()) {
-			int32_t lat_semicircles = record.GetPositionLat();
-			if (lat_semicircles != 0x7FFFFFFF) { // Check for invalid value
+			FIT_SINT32 lat_semicircles = record.GetPositionLat();
+			if (lat_semicircles != FIT_SINT32_INVALID) { // Check for invalid value
 				fitRecord.latitude = lat_semicircles * (180.0 / 2147483648.0);
 			}
 		}
 		if (record.IsPositionLongValid()) {
-			int32_t long_semicircles = record.GetPositionLong();
-			if (long_semicircles != 0x7FFFFFFF) { // Check for invalid value
+			FIT_SINT32 long_semicircles = record.GetPositionLong();
+			if (long_semicircles != FIT_SINT32_INVALID) { // Check for invalid value
 				fitRecord.longitude = long_semicircles * (180.0 / 2147483648.0);
 			}
 		}
 
 		// Altitude
 		if (record.IsAltitudeValid()) {
-			uint16_t alt = record.GetAltitude();
-			if (alt != 0xFFFF) {                          // Check for invalid value
-				fitRecord.altitude = (alt / 5.0) - 500.0; // Convert from scaled value
+			FIT_FLOAT32 alt = record.GetAltitude();
+			if (alt != FIT_FLOAT32_INVALID) {
+				fitRecord.altitude = alt;
 			}
 		}
 		if (record.IsEnhancedAltitudeValid()) {
-			uint32_t enh_alt = record.GetEnhancedAltitude();
-			if (enh_alt != 0xFFFFFFFF) {                               // Check for invalid value
-				fitRecord.enhanced_altitude = (enh_alt / 5.0) - 500.0; // Convert from scaled value
+			FIT_FLOAT32 enh_alt = record.GetEnhancedAltitude();
+			if (enh_alt != FIT_FLOAT32_INVALID) {
+				fitRecord.enhanced_altitude = enh_alt;
 			}
 		}
 
 		// Speed and distance
 		if (record.IsDistanceValid()) {
-			uint32_t dist = record.GetDistance();
-			if (dist != 0xFFFFFFFF) {              // Check for invalid value
-				fitRecord.distance = dist / 100.0; // Convert from scaled value (cm to m)
+			FIT_FLOAT32 dist = record.GetDistance();
+			if (dist != FIT_FLOAT32_INVALID) {      // Check for invalid value
+				fitRecord.distance = dist / 1000.0; // Convert from scaled value (cm to m)
 			}
 		}
 		if (record.IsSpeedValid()) {
-			uint16_t spd = record.GetSpeed();
-			if (spd != 0xFFFF) {                // Check for invalid value
-				fitRecord.speed = spd / 1000.0; // Convert from scaled value (mm/s to m/s)
+			FIT_FLOAT32 spd = record.GetSpeed();
+			if (spd != FIT_FLOAT32_INVALID) { // Check for invalid value
+				fitRecord.speed = spd;
 			}
 		}
 		if (record.IsEnhancedSpeedValid()) {
-			uint32_t enh_spd = record.GetEnhancedSpeed();
-			if (enh_spd != 0xFFFFFFFF) {                     // Check for invalid value
-				fitRecord.enhanced_speed = enh_spd / 1000.0; // Convert from scaled value
+			FIT_FLOAT32 enh_spd = record.GetEnhancedSpeed();
+			if (enh_spd != FIT_FLOAT32_INVALID) { // Check for invalid value
+				fitRecord.enhanced_speed = enh_spd;
 			}
 		}
 		if (record.IsVerticalSpeedValid()) {
-			int16_t vert_spd = record.GetVerticalSpeed();
-			if (vert_spd != 0x7FFF) {                         // Check for invalid value
-				fitRecord.vertical_speed = vert_spd / 1000.0; // Convert from scaled value
+			FIT_FLOAT32 vert_spd = record.GetVerticalSpeed();
+			if (vert_spd != FIT_FLOAT32_INVALID) { // Check for invalid value
+				fitRecord.vertical_speed = vert_spd;
 			}
 		}
 
 		// Power metrics
 		if (record.IsPowerValid()) {
-			uint16_t pwr = record.GetPower();
-			if (pwr != 0xFFFF) { // Check for invalid value
+			FIT_UINT16 pwr = record.GetPower();
+			if (pwr != FIT_UINT16_INVALID) { // Check for invalid value
 				fitRecord.power = pwr;
 			}
 		}
 		if (record.IsMotorPowerValid()) {
-			uint16_t motor_pwr = record.GetMotorPower();
-			if (motor_pwr != 0xFFFF) { // Check for invalid value
+			FIT_UINT16 motor_pwr = record.GetMotorPower();
+			if (motor_pwr != FIT_UINT16_INVALID) { // Check for invalid value
 				fitRecord.motor_power = motor_pwr;
 			}
 		}
 		if (record.IsAccumulatedPowerValid()) {
-			uint32_t acc_pwr = record.GetAccumulatedPower();
-			if (acc_pwr != 0xFFFFFFFF) { // Check for invalid value
+			FIT_UINT32 acc_pwr = record.GetAccumulatedPower();
+			if (acc_pwr != FIT_UINT32_INVALID) { // Check for invalid value
 				fitRecord.accumulated_power = acc_pwr;
 			}
 		}
 		if (record.IsCompressedAccumulatedPowerValid()) {
-			uint16_t comp_acc_pwr = record.GetCompressedAccumulatedPower();
-			if (comp_acc_pwr != 0xFFFF) { // Check for invalid value
+			FIT_UINT16 comp_acc_pwr = record.GetCompressedAccumulatedPower();
+			if (comp_acc_pwr != FIT_UINT16_INVALID) { // Check for invalid value
 				fitRecord.compressed_accumulated_power = comp_acc_pwr;
 			}
 		}
 
 		// Heart rate and physiological
 		if (record.IsHeartRateValid()) {
-			uint8_t hr = record.GetHeartRate();
-			if (hr != 0xFF) { // Check for invalid value
+			FIT_UINT8 hr = record.GetHeartRate();
+			if (hr != FIT_UINT8_INVALID) { // Check for invalid value
 				fitRecord.heart_rate = hr;
 			}
 		}
 		if (record.IsTotalHemoglobinConcValid()) {
-			uint16_t thc = record.GetTotalHemoglobinConc();
-			if (thc != 0xFFFF) {                               // Check for invalid value
-				fitRecord.total_hemoglobin_conc = thc / 100.0; // Convert from scaled value
+			FIT_FLOAT32 thc = record.GetTotalHemoglobinConc();
+			if (thc != FIT_FLOAT32_INVALID) {          // Check for invalid value
+				fitRecord.total_hemoglobin_conc = thc; // Already scaled correctly
 			}
 		}
 		if (record.IsTotalHemoglobinConcMinValid()) {
-			uint16_t thc_min = record.GetTotalHemoglobinConcMin();
-			if (thc_min != 0xFFFF) { // Check for invalid value
-				fitRecord.total_hemoglobin_conc_min = thc_min / 100.0;
+			FIT_FLOAT32 thc_min = record.GetTotalHemoglobinConcMin();
+			if (thc_min != FIT_FLOAT32_INVALID) {              // Check for invalid value
+				fitRecord.total_hemoglobin_conc_min = thc_min; // Already scaled correctly
 			}
 		}
 		if (record.IsTotalHemoglobinConcMaxValid()) {
-			uint16_t thc_max = record.GetTotalHemoglobinConcMax();
-			if (thc_max != 0xFFFF) { // Check for invalid value
-				fitRecord.total_hemoglobin_conc_max = thc_max / 100.0;
+			FIT_FLOAT32 thc_max = record.GetTotalHemoglobinConcMax();
+			if (thc_max != FIT_FLOAT32_INVALID) {              // Check for invalid value
+				fitRecord.total_hemoglobin_conc_max = thc_max; // Already scaled correctly
 			}
 		}
 		if (record.IsSaturatedHemoglobinPercentValid()) {
-			uint16_t shp = record.GetSaturatedHemoglobinPercent();
-			if (shp != 0xFFFF) {                                     // Check for invalid value
-				fitRecord.saturated_hemoglobin_percent = shp / 10.0; // Convert from scaled value
+			FIT_FLOAT32 shp = record.GetSaturatedHemoglobinPercent();
+			if (shp != FIT_FLOAT32_INVALID) {                 // Check for invalid value
+				fitRecord.saturated_hemoglobin_percent = shp; // Already scaled correctly
 			}
 		}
 		if (record.IsSaturatedHemoglobinPercentMinValid()) {
-			uint16_t shp_min = record.GetSaturatedHemoglobinPercentMin();
-			if (shp_min != 0xFFFF) { // Check for invalid value
-				fitRecord.saturated_hemoglobin_percent_min = shp_min / 10.0;
+			FIT_FLOAT32 shp_min = record.GetSaturatedHemoglobinPercentMin();
+			if (shp_min != FIT_FLOAT32_INVALID) {                     // Check for invalid value
+				fitRecord.saturated_hemoglobin_percent_min = shp_min; // Already scaled correctly
 			}
 		}
 		if (record.IsSaturatedHemoglobinPercentMaxValid()) {
-			uint16_t shp_max = record.GetSaturatedHemoglobinPercentMax();
-			if (shp_max != 0xFFFF) { // Check for invalid value
-				fitRecord.saturated_hemoglobin_percent_max = shp_max / 10.0;
+			FIT_FLOAT32 shp_max = record.GetSaturatedHemoglobinPercentMax();
+			if (shp_max != FIT_FLOAT32_INVALID) {                     // Check for invalid value
+				fitRecord.saturated_hemoglobin_percent_max = shp_max; // Already scaled correctly
 			}
 		}
 
 		// Cadence
 		if (record.IsCadenceValid()) {
-			uint8_t cad = record.GetCadence();
-			if (cad != 0xFF) { // Check for invalid value
+			FIT_UINT8 cad = record.GetCadence();
+			if (cad != FIT_UINT8_INVALID) { // Check for invalid value
 				fitRecord.cadence = cad;
 			}
 		}
 		if (record.IsCadence256Valid()) {
-			uint16_t cad256 = record.GetCadence256();
-			if (cad256 != 0xFFFF) {                    // Check for invalid value
-				fitRecord.cadence256 = cad256 / 256.0; // Convert from scaled value
+			FIT_FLOAT32 cad256 = record.GetCadence256();
+			if (cad256 != FIT_FLOAT32_INVALID) { // Check for invalid value
+				fitRecord.cadence256 = cad256;   // Already scaled correctly
 			}
 		}
 		if (record.IsFractionalCadenceValid()) {
-			uint8_t frac_cad = record.GetFractionalCadence();
-			if (frac_cad != 0xFF) {                              // Check for invalid value
-				fitRecord.fractional_cadence = frac_cad / 128.0; // Convert from scaled value
+			FIT_FLOAT32 frac_cad = record.GetFractionalCadence();
+			if (frac_cad != FIT_FLOAT32_INVALID) {       // Check for invalid value
+				fitRecord.fractional_cadence = frac_cad; // Already scaled correctly
 			}
 		}
 
 		// Temperature
 		if (record.IsTemperatureValid()) {
-			int8_t temp = record.GetTemperature();
-			if (temp != 0x7F) {               // Check for invalid value
+			FIT_SINT8 temp = record.GetTemperature();
+			if (temp != FIT_SINT8_INVALID) {  // Check for invalid value
 				fitRecord.temperature = temp; // Already in Celsius
 			}
 		}
 		if (record.IsCoreTemperatureValid()) {
-			uint16_t core_temp = record.GetCoreTemperature();
-			if (core_temp != 0xFFFF) {                          // Check for invalid value
+			FIT_UINT16 core_temp = record.GetCoreTemperature();
+			if (core_temp != FIT_UINT16_INVALID) {              // Check for invalid value
 				fitRecord.core_temperature = core_temp / 100.0; // Convert from scaled value
 			}
 		}
 
 		// Cycling metrics
 		if (record.IsGradeValid()) {
-			int16_t grd = record.GetGrade();
-			if (grd != 0x7FFF) {               // Check for invalid value
-				fitRecord.grade = grd / 100.0; // Convert from scaled value (percentage)
+			FIT_FLOAT32 grd = record.GetGrade();
+			if (grd != FIT_FLOAT32_INVALID) { // Check for invalid value
+				fitRecord.grade = grd;        // Already scaled correctly
 			}
 		}
 		if (record.IsResistanceValid()) {
-			uint8_t res = record.GetResistance();
-			if (res != 0xFF) { // Check for invalid value
+			FIT_UINT8 res = record.GetResistance();
+			if (res != FIT_UINT8_INVALID) { // Check for invalid value
 				fitRecord.resistance = res;
 			}
 		}
 		if (record.IsLeftRightBalanceValid()) {
-			uint8_t lr_bal = record.GetLeftRightBalance();
-			if (lr_bal != 0xFF) {                      // Check for invalid value
+			FIT_UINT8 lr_bal = record.GetLeftRightBalance();
+			if (lr_bal != FIT_UINT8_INVALID) {         // Check for invalid value
 				fitRecord.left_right_balance = lr_bal; // Already in percentage
 			}
 		}
 		if (record.IsLeftTorqueEffectivenessValid()) {
-			uint8_t lte = record.GetLeftTorqueEffectiveness();
-			if (lte != 0xFF) {                                   // Check for invalid value
-				fitRecord.left_torque_effectiveness = lte / 2.0; // Convert from scaled value
+			FIT_FLOAT32 lte = record.GetLeftTorqueEffectiveness();
+			if (lte != FIT_FLOAT32_INVALID) {              // Check for invalid value
+				fitRecord.left_torque_effectiveness = lte; // Already scaled correctly
 			}
 		}
 		if (record.IsRightTorqueEffectivenessValid()) {
-			uint8_t rte = record.GetRightTorqueEffectiveness();
-			if (rte != 0xFF) {                                    // Check for invalid value
-				fitRecord.right_torque_effectiveness = rte / 2.0; // Convert from scaled value
+			FIT_FLOAT32 rte = record.GetRightTorqueEffectiveness();
+			if (rte != FIT_FLOAT32_INVALID) {               // Check for invalid value
+				fitRecord.right_torque_effectiveness = rte; // Already scaled correctly
 			}
 		}
 		if (record.IsLeftPedalSmoothnessValid()) {
-			uint8_t lps = record.GetLeftPedalSmoothness();
-			if (lps != 0xFF) {                               // Check for invalid value
-				fitRecord.left_pedal_smoothness = lps / 2.0; // Convert from scaled value
+			FIT_FLOAT32 lps = record.GetLeftPedalSmoothness();
+			if (lps != FIT_FLOAT32_INVALID) {          // Check for invalid value
+				fitRecord.left_pedal_smoothness = lps; // Already scaled correctly
 			}
 		}
 		if (record.IsRightPedalSmoothnessValid()) {
-			uint8_t rps = record.GetRightPedalSmoothness();
-			if (rps != 0xFF) {                                // Check for invalid value
-				fitRecord.right_pedal_smoothness = rps / 2.0; // Convert from scaled value
+			FIT_FLOAT32 rps = record.GetRightPedalSmoothness();
+			if (rps != FIT_FLOAT32_INVALID) {           // Check for invalid value
+				fitRecord.right_pedal_smoothness = rps; // Already scaled correctly
 			}
 		}
 		if (record.IsCombinedPedalSmoothnessValid()) {
-			uint8_t cps = record.GetCombinedPedalSmoothness();
-			if (cps != 0xFF) {                                   // Check for invalid value
-				fitRecord.combined_pedal_smoothness = cps / 2.0; // Convert from scaled value
+			FIT_FLOAT32 cps = record.GetCombinedPedalSmoothness();
+			if (cps != FIT_FLOAT32_INVALID) {              // Check for invalid value
+				fitRecord.combined_pedal_smoothness = cps; // Already scaled correctly
 			}
 		}
 		if (record.IsLeftPcoValid()) {
-			int8_t lpco = record.GetLeftPco();
-			if (lpco != 0x7F) {            // Check for invalid value
-				fitRecord.left_pco = lpco; // Already in mm
+			FIT_SINT8 lpco = record.GetLeftPco();
+			if (lpco != FIT_SINT8_INVALID) { // Check for invalid value
+				fitRecord.left_pco = lpco;   // Already in mm
 			}
 		}
 		if (record.IsRightPcoValid()) {
-			int8_t rpco = record.GetRightPco();
-			if (rpco != 0x7F) {             // Check for invalid value
-				fitRecord.right_pco = rpco; // Already in mm
+			FIT_SINT8 rpco = record.GetRightPco();
+			if (rpco != FIT_SINT8_INVALID) { // Check for invalid value
+				fitRecord.right_pco = rpco;  // Already in mm
 			}
 		}
 
 		// Running metrics
 		if (record.IsVerticalOscillationValid()) {
-			uint16_t vo = record.GetVerticalOscillation();
-			if (vo != 0xFFFF) {                             // Check for invalid value
-				fitRecord.vertical_oscillation = vo / 10.0; // Convert from scaled value (mm)
+			FIT_FLOAT32 vo = record.GetVerticalOscillation();
+			if (vo != FIT_FLOAT32_INVALID) {         // Check for invalid value
+				fitRecord.vertical_oscillation = vo; // Already scaled correctly
 			}
 		}
 		if (record.IsStanceTimePercentValid()) {
-			uint16_t stp = record.GetStanceTimePercent();
-			if (stp != 0xFFFF) {                             // Check for invalid value
-				fitRecord.stance_time_percent = stp / 100.0; // Convert from scaled value
+			FIT_FLOAT32 stp = record.GetStanceTimePercent();
+			if (stp != FIT_FLOAT32_INVALID) {        // Check for invalid value
+				fitRecord.stance_time_percent = stp; // Already scaled correctly
 			}
 		}
 		if (record.IsStanceTimeValid()) {
-			uint16_t st = record.GetStanceTime();
-			if (st != 0xFFFF) {                    // Check for invalid value
-				fitRecord.stance_time = st / 10.0; // Convert from scaled value (ms)
+			FIT_FLOAT32 st = record.GetStanceTime();
+			if (st != FIT_FLOAT32_INVALID) { // Check for invalid value
+				fitRecord.stance_time = st;  // Already scaled correctly
 			}
 		}
 		if (record.IsStanceTimeBalanceValid()) {
-			uint16_t stb = record.GetStanceTimeBalance();
-			if (stb != 0xFFFF) {                             // Check for invalid value
-				fitRecord.stance_time_balance = stb / 100.0; // Convert from scaled value
+			FIT_FLOAT32 stb = record.GetStanceTimeBalance();
+			if (stb != FIT_FLOAT32_INVALID) {        // Check for invalid value
+				fitRecord.stance_time_balance = stb; // Already scaled correctly
 			}
 		}
 		if (record.IsStepLengthValid()) {
-			uint16_t sl = record.GetStepLength();
-			if (sl != 0xFFFF) {                    // Check for invalid value
-				fitRecord.step_length = sl / 10.0; // Convert from scaled value (mm)
+			FIT_FLOAT32 sl = record.GetStepLength();
+			if (sl != FIT_FLOAT32_INVALID) { // Check for invalid value
+				fitRecord.step_length = sl;  // Already scaled correctly
 			}
 		}
 		if (record.IsVerticalRatioValid()) {
-			uint16_t vr = record.GetVerticalRatio();
-			if (vr != 0xFFFF) {                        // Check for invalid value
-				fitRecord.vertical_ratio = vr / 100.0; // Convert from scaled value
+			FIT_FLOAT32 vr = record.GetVerticalRatio();
+			if (vr != FIT_FLOAT32_INVALID) {   // Check for invalid value
+				fitRecord.vertical_ratio = vr; // Already scaled correctly
 			}
 		}
 
@@ -936,7 +936,7 @@ public:
 		}
 
 		if (session.IsTotalDistanceValid()) {
-			fit_session.total_distance = session.GetTotalDistance() / 100.0;
+			fit_session.total_distance = session.GetTotalDistance() / 1000.0;
 		}
 
 		if (session.IsSportValid()) {
@@ -1042,7 +1042,7 @@ public:
 		}
 
 		if (lap.IsTotalDistanceValid()) {
-			fit_lap.total_distance = lap.GetTotalDistance() / 100.0;
+			fit_lap.total_distance = lap.GetTotalDistance() / 1000.0;
 		}
 
 		if (lap.IsTotalCaloriesValid()) {
